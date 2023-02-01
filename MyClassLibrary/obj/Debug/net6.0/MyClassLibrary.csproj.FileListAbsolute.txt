@@ -1,0 +1,14 @@
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.csproj.AssemblyReference.cache
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.AssemblyInfoInputs.cache
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.AssemblyInfo.cs
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.deps.json
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.pdb
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\refint\MyClassLibrary.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.pdb
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\ref\MyClassLibrary.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\bin\Debug\net6.0\MyClassLibrary.runtimeconfig.json
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\MyClassLibrary\obj\Debug\net6.0\MyClassLibrary.genruntimeconfig.cache
