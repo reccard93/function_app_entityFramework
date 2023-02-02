@@ -9,14 +9,15 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Collections.Generic;
-using function_app_entityFramework.models;
-using function_app_entityFramework.Data;
+using MyClassLibrary.models;
+using MyClassLibrary.Data;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using function_app_entityFramework.Repositories;
+using MyClassLibrary.Repositories;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using function_app_entityFramework;
 using MyClassLibrary.Repositories;
+using MyClassLibrary.UnitOfWork;
 
 [assembly: FunctionsStartup(typeof(function_app_entityFramework.Startup))]
 
@@ -24,35 +25,37 @@ namespace function_app_entityFramework
 {
     public class AzureFunctionRepo
     {
-        private  IDependentsRepository _Dependentrep;
-        private  IToDoListRepository _ToDoListRepositoryrep;
+        private IUnitOfWork _unitOfWork;
 
-        public AzureFunctionRepo(IDependentsRepository Dependentrep, IToDoListRepository ToDoListRepositoryrep)
+        public AzureFunctionRepo(IUnitOfWork unitOfWork)
         {
-            _Dependentrep = Dependentrep;
-            _ToDoListRepositoryrep = ToDoListRepositoryrep;
+            _unitOfWork = unitOfWork;
         }
 
         [FunctionName("GetToDoList")]
-        public  async Task<IActionResult> GetToDoList(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
-            ILogger log)
+        public async Task<IActionResult> GetToDoList(
+             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+             ILogger log)
         {
-            var toDoList = await _ToDoListRepositoryrep.GetAll();
+            var toDoList = await _unitOfWork.ToDoListRepository.GetAll();
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
             return new OkObjectResult(toDoList);
         }
 
         [FunctionName("GetToDoListItem")]
-        public  async Task<IActionResult> GetToDoListItem(
+        public async Task<IActionResult> GetToDoListItem(
          [HttpTrigger(AuthorizationLevel.Function, "get", Route = "todolist/{id}")] HttpRequest req,
          [FromRoute] int id,
          ILogger log)
         {
-            var toDoList = await _ToDoListRepositoryrep.Get(id);
+            var toDoList = await _unitOfWork.ToDoListRepository.Get(id);
             if (toDoList == null)
             {
                 return new NotFoundResult();
             }
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
             return new OkObjectResult(toDoList);
         }
 
@@ -64,7 +67,7 @@ namespace function_app_entityFramework
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var updatedToDoList = JsonConvert.DeserializeObject<ToDoList>(requestBody);
-            var toDoList = await _ToDoListRepositoryrep.Get(id);
+            var toDoList = await _unitOfWork.ToDoListRepository.Get(id);
             if (toDoList == null)
             {
                 return new NotFoundResult();
@@ -73,11 +76,13 @@ namespace function_app_entityFramework
             toDoList.Description = updatedToDoList.Description;
             toDoList.IsCompleted = updatedToDoList.IsCompleted;
 
-            _ToDoListRepositoryrep.Update(toDoList);
-            await _ToDoListRepositoryrep.SaveChanges();
+            await _unitOfWork.ToDoListRepository.Update(toDoList);
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
 
             return new OkObjectResult(toDoList);
         }
+
         [FunctionName("CreateToDoListItem")]
         public  async Task<IActionResult> CreateToDoListItem(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "todolist")] HttpRequest req,
@@ -85,12 +90,12 @@ namespace function_app_entityFramework
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var newToDoList = JsonConvert.DeserializeObject<ToDoList>(requestBody);
-            await _ToDoListRepositoryrep.Add(newToDoList);
-            await _ToDoListRepositoryrep.SaveChanges();
+            await _unitOfWork.ToDoListRepository.Add(newToDoList);
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
+
             return new OkObjectResult(newToDoList);
         }
-
-
 
         [FunctionName("DeleteToDoListItem")]
         public  async Task<IActionResult> DeleteToDoListItem(
@@ -98,14 +103,15 @@ namespace function_app_entityFramework
              ILogger log,
             [FromRoute] int id)
         {
-            var toDoList = await _ToDoListRepositoryrep.Get(id);
+            var toDoList = await _unitOfWork.ToDoListRepository.Get(id);
             if (toDoList == null)
             {
                 return new NotFoundResult();
             }
-            await _ToDoListRepositoryrep.Delete(id);
-            await _ToDoListRepositoryrep.SaveChanges();
-            return new OkResult();
+            await _unitOfWork.ToDoListRepository.Delete(id);
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
+            return new OkObjectResult("L'item è stato cancellato con successo ");
         }
         //api dipendenti=======================
 
@@ -114,7 +120,9 @@ namespace function_app_entityFramework
          [HttpTrigger(AuthorizationLevel.Function, "get", Route = "dipendenti")] HttpRequest req,
              ILogger log)
         {
-            var Dipendenti = _Dependentrep.GetAllDependents();
+            var Dipendenti = _unitOfWork.DependentsRepository.GetAllDependents();
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
             return new OkObjectResult(Dipendenti);
         }
 
@@ -125,23 +133,25 @@ namespace function_app_entityFramework
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var newDipendente = JsonConvert.DeserializeObject<Dipendenti>(requestBody);
-            var existingDipendente = _Dependentrep.GetAllDependents().FirstOrDefault(x => x.Name == newDipendente.Name);
+            var existingDipendente = _unitOfWork.DependentsRepository.GetAllDependents().FirstOrDefault(x => x.Name == newDipendente.Name);
             if (existingDipendente != null)
             {
                 return new BadRequestObjectResult("Esiste già un dipendente con lo stesso nome");
             }
 
-            await _Dependentrep.Add(newDipendente);
-            await _Dependentrep.SaveChanges();
+            await _unitOfWork.DependentsRepository.Add(newDipendente);
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
             return new OkObjectResult(newDipendente);
         }
+
         [FunctionName("UpdateDipendente")]
         public  async Task<IActionResult> UpdateDipendente(
         [HttpTrigger(AuthorizationLevel.Function, "put", Route = "dipendente/{Id}")] HttpRequest req,
         [FromRoute] int id,
             ILogger log)
         {
-            var Dipendente = await _Dependentrep.Get(id);
+            var Dipendente = await _unitOfWork.DependentsRepository.Get(id);
             if (Dipendente == null)
             {
                 return new NotFoundResult();
@@ -151,40 +161,45 @@ namespace function_app_entityFramework
 
             Dipendente.Name = updatedDipendente.Name;
 
-            _Dependentrep.Update(Dipendente);
-            await _Dependentrep.SaveChanges();
+            await _unitOfWork.DependentsRepository.Update(Dipendente);
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
 
             return new OkObjectResult(Dipendente);
         }
-            [FunctionName("GetDependent")]
+         [FunctionName("GetDependent")]
             public  async Task<IActionResult> GetDependent(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "dependent/{id}")] HttpRequest req,
-            [FromRoute] int id,
+         [HttpTrigger(AuthorizationLevel.Function, "get", Route = "dependent/{id}")] HttpRequest req,
+         [FromRoute] int id,
                 ILogger log)
-            {
-            var toDoList = await _Dependentrep.Get(id);
+         {
+            var toDoList = await _unitOfWork.DependentsRepository.Get(id);
             if (toDoList == null)
             {
                 return new NotFoundResult();
             }
-            return new OkObjectResult(toDoList);
-            }
+                await _unitOfWork.Save();
+                _unitOfWork.Dispose();
+                return new OkObjectResult(toDoList);
+         }
 
 
         [FunctionName("DeleteDipendente")]
         public  async Task<IActionResult> DeleteDipendente(
         [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeleteDipendente/{id}")] HttpRequest req, ILogger log, int id)
         {
-            var dipendente = await _Dependentrep.Get(id);
+            var dipendente = await _unitOfWork.DependentsRepository.Get(id);
 
             if (dipendente == null)
             {
                 return new NotFoundResult();
             }
 
-            await _Dependentrep.Delete(id);
+            await _unitOfWork.DependentsRepository.Delete(id);
 
-            await _Dependentrep.SaveChanges();
+            await _unitOfWork.Save();
+            _unitOfWork.Dispose();
+
             return new OkResult();
         }
     }

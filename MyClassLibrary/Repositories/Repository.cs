@@ -1,5 +1,5 @@
-﻿using function_app_entityFramework.Data;
-using function_app_entityFramework.models;
+﻿using MyClassLibrary.Data;
+using MyClassLibrary.models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace function_app_entityFramework.Repositories
+namespace MyClassLibrary.Repositories
 {
     public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
     {

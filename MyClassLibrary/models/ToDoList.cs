@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace function_app_entityFramework.models
+namespace MyClassLibrary.models
 {
     public class ToDoList
     {

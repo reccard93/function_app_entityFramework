@@ -1,5 +1,5 @@
-﻿using function_app_entityFramework.models;
-using function_app_entityFramework.Repositories;
+﻿using MyClassLibrary.models;
+using MyClassLibrary.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

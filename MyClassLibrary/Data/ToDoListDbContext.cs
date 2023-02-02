@@ -1,4 +1,4 @@
-﻿using function_app_entityFramework.models;
+﻿using MyClassLibrary.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace function_app_entityFramework.Data
+namespace MyClassLibrary.Data
 {
     public class ToDoListDbContext : DbContext
     {
