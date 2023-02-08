@@ -39,7 +39,6 @@ namespace function_app_entityFramework
         {
             var toDoList = await _unitOfWork.ToDoListRepository.GetAll();
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
             return new OkObjectResult(toDoList);
         }
 
@@ -55,7 +54,6 @@ namespace function_app_entityFramework
                 return new NotFoundResult();
             }
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
             return new OkObjectResult(toDoList);
         }
 
@@ -78,7 +76,6 @@ namespace function_app_entityFramework
 
             await _unitOfWork.ToDoListRepository.Update(toDoList);
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
 
             return new OkObjectResult(toDoList);
         }
@@ -92,7 +89,6 @@ namespace function_app_entityFramework
             var newToDoList = JsonConvert.DeserializeObject<ToDoList>(requestBody);
             await _unitOfWork.ToDoListRepository.Add(newToDoList);
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
 
             return new OkObjectResult(newToDoList);
         }
@@ -110,7 +106,6 @@ namespace function_app_entityFramework
             }
             await _unitOfWork.ToDoListRepository.Delete(id);
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
             return new OkObjectResult("L'item è stato cancellato con successo ");
         }
         //api dipendenti=======================
@@ -122,7 +117,6 @@ namespace function_app_entityFramework
         {
             var Dipendenti = _unitOfWork.DependentsRepository.GetAllDependents();
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
             return new OkObjectResult(Dipendenti);
         }
 
@@ -141,7 +135,6 @@ namespace function_app_entityFramework
 
             await _unitOfWork.DependentsRepository.Add(newDipendente);
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
             return new OkObjectResult(newDipendente);
         }
 
@@ -163,7 +156,6 @@ namespace function_app_entityFramework
 
             await _unitOfWork.DependentsRepository.Update(Dipendente);
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
 
             return new OkObjectResult(Dipendente);
         }
@@ -179,7 +171,6 @@ namespace function_app_entityFramework
                 return new NotFoundResult();
             }
                 await _unitOfWork.Save();
-                _unitOfWork.Dispose();
                 return new OkObjectResult(toDoList);
          }
 
@@ -198,7 +189,6 @@ namespace function_app_entityFramework
             await _unitOfWork.DependentsRepository.Delete(id);
 
             await _unitOfWork.Save();
-            _unitOfWork.Dispose();
 
             return new OkResult();
         }
