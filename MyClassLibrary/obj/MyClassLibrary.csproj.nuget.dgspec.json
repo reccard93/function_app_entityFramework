@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\RiccardoCiurlino\\source\\repos\\function_app_entityFramework\\MyClassLibrary\\MyClassLibrary.csproj",
-        "projectName": "MyClassLibrary",
+        "projectName": "Riccard10spackages",
         "projectPath": "C:\\Users\\RiccardoCiurlino\\source\\repos\\function_app_entityFramework\\MyClassLibrary\\MyClassLibrary.csproj",
         "packagesPath": "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\RiccardoCiurlino\\source\\repos\\function_app_entityFramework\\MyClassLibrary\\obj\\",
@@ -40,6 +40,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.Azure.KeyVault": {
+              "target": "Package",
+              "version": "[2.3.2, )"
+            },
+            "Microsoft.Azure.Services.AppAuthentication": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.13, )"
