@@ -35,7 +35,7 @@ namespace MyClassLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dipendenti");
+                    b.ToTable("Dipendenti", (string)null);
                 });
 
             modelBuilder.Entity("MyClassLibrary.models.ToDoList", b =>
@@ -64,7 +64,7 @@ namespace MyClassLibrary.Migrations
 
                     b.HasIndex("DipendenteId");
 
-                    b.ToTable("ToDoList");
+                    b.ToTable("ToDoList", (string)null);
                 });
 
             modelBuilder.Entity("MyClassLibrary.models.ToDoList", b =>

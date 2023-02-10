@@ -15,10 +15,7 @@ namespace MyClassLibrary.Data
     public class ToDoListDbContext : DbContext
     {
         private readonly IConfiguration _config;
-        public ToDoListDbContext()
-        {
 
-        }
         public ToDoListDbContext(DbContextOptions<ToDoListDbContext> options, IConfiguration config)
             : base(options)
         {
@@ -27,37 +24,6 @@ namespace MyClassLibrary.Data
 
         public DbSet<ToDoList> ToDoList { get; set; } = null!;
         public DbSet<Dipendenti> Dipendenti { get; set; } = null!;
-
-        private static string GetConnectionStringFromKeyVault(IConfiguration config)
-        {
-            try
-            {
-                string keyVaultUrl = config["KeyVaultUrl"];
-                var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                var keyVaultClient = new KeyVaultClient(
-                    new KeyVaultClient.AuthenticationCallback(
-                        azureServiceTokenProvider.KeyVaultTokenCallback));
-
-                var secret = keyVaultClient.GetSecretAsync(keyVaultUrl, "ConnectionStringa").GetAwaiter().GetResult();
-                return secret.Value;
-            }
-            catch (Exception ex)
-            {
-                // Logga l'eccezione o gestiscila come desideri
-                Console.WriteLine("Errore durante la recupero della connection string dal Key Vault: " + ex.Message);
-                throw;
-            }
-        }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            string connectionString = GetConnectionStringFromKeyVault(_config);
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

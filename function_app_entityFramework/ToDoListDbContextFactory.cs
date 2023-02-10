@@ -1,37 +1,32 @@
-﻿using MyClassLibrary.Data;
+﻿using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using MyClassLibrary.Data;
 using System;
-using MyClassLibrary.UnitOfWork;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace function_app_entityFramework
 {
-    public class Startup : FunctionsStartup
+    public class ToDoListDbContextFactory : IDesignTimeDbContextFactory<ToDoListDbContext>
     {
-        public override void Configure(IFunctionsHostBuilder builder)
+        public ToDoListDbContext CreateDbContext(string[] args)
         {
+            var builder = new DbContextOptionsBuilder<ToDoListDbContext>();
             var config = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
 
-            builder.Services.AddSingleton<IConfiguration>(config);
-
-            string connectionString = GetConnectionStringFromKeyVault(config);
-
-            builder.Services.AddDbContext<ToDoListDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
-
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            string connectionString = GetConnectionString(config);
+            builder.UseSqlServer(connectionString);
+            return new ToDoListDbContext(builder.Options, config);
         }
-        private static string GetConnectionStringFromKeyVault(IConfiguration config)
+
+        private static string GetConnectionString(IConfiguration config)
         {
             try
             {
@@ -52,4 +47,6 @@ namespace function_app_entityFramework
             }
         }
     }
+
+
 }
