@@ -12,5 +12,7 @@ namespace MyClassLibrary.Repositories
     {
         Task<IEnumerable<ToDoList>> GetTasks(int id);
         IEnumerable<Dipendenti> GetAllDependents();
+        Task<Dipendenti> GetByName(string name);
+
     }
 }

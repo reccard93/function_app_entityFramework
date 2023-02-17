@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "PBjobJvLOMvkt7uULl21F3uKVQajoGf6SrWVTxIPyE3Fg8h0XIdm1n/+luHR+W2L+4UD/BpwmcLLcYB9gbZO9w==",
+  "dgSpecHash": "lnLlyZfowiecE6sqCCob1DCr9+9Uw+MrDVaVViN337xju+qkNTlSDMIQWuahKuYikd7zWYb+SJVbPlQtyTiLPA==",
   "success": true,
   "projectFilePath": "C:\\Users\\RiccardoCiurlino\\source\\repos\\function_app_entityFramework\\MyClassLibrary\\MyClassLibrary.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.azure.keyvault\\2.3.2\\microsoft.azure.keyvault.2.3.2.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.azure.keyvault.webkey\\2.0.7\\microsoft.azure.keyvault.webkey.2.0.7.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.azure.services.appauthentication\\1.0.1\\microsoft.azure.services.appauthentication.1.0.1.nupkg.sha512",
-    "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\RiccardoCiurlino\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.13\\microsoft.entityframeworkcore.6.0.13.nupkg.sha512",

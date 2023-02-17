@@ -1,4 +1,5 @@
-﻿using MyClassLibrary.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MyClassLibrary.Data;
 using MyClassLibrary.models;
 using MyClassLibrary.Repositories;
 using System;
@@ -26,5 +27,10 @@ namespace MyClassLibrary.Repositories
         {
             return _ToDoListDbContext.Dipendenti.ToList();
         }
+        public async Task<Dipendenti> GetByName(string name)
+        {
+            return await _ToDoListDbContext.Dipendenti.FirstOrDefaultAsync(d => d.Name == name);
+        }
+
     }
 }

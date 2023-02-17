@@ -4,8 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "function_app_entityFramework", "function_app_entityFramework\function_app_entityFramework.csproj", "{3D56841B-84B8-4EFB-91B9-76433C2DB15E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6DD57AED-2746-460D-BEEC-51F603EA7D99} = {6DD57AED-2746-460D-BEEC-51F603EA7D99}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClassLibrary", "MyClassLibrary\MyClassLibrary.csproj", "{ABE31CA4-B054-40AE-8A0B-9907165F0623}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyClassLibrary", "MyClassLibrary\MyClassLibrary.csproj", "{ABE31CA4-B054-40AE-8A0B-9907165F0623}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctionDTO", "AzureFunctionDTO\AzureFunctionDTO.csproj", "{6DD57AED-2746-460D-BEEC-51F603EA7D99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{ABE31CA4-B054-40AE-8A0B-9907165F0623}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABE31CA4-B054-40AE-8A0B-9907165F0623}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABE31CA4-B054-40AE-8A0B-9907165F0623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DD57AED-2746-460D-BEEC-51F603EA7D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DD57AED-2746-460D-BEEC-51F603EA7D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DD57AED-2746-460D-BEEC-51F603EA7D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DD57AED-2746-460D-BEEC-51F603EA7D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

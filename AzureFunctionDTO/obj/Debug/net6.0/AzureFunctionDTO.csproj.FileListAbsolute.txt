@@ -1,0 +1,15 @@
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\bin\Debug\net6.0\AzureFunctionDTO.deps.json
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\bin\Debug\net6.0\AzureFunctionDTO.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\bin\Debug\net6.0\AzureFunctionDTO.pdb
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\bin\Debug\net6.0\MyClassLibrary.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\bin\Debug\net6.0\MyClassLibrary.pdb
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.csproj.AssemblyReference.cache
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.AssemblyInfoInputs.cache
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.AssemblyInfo.cs
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.csproj.CoreCompileInputs.cache
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.csproj.CopyComplete
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\refint\AzureFunctionDTO.dll
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\AzureFunctionDTO.pdb
+C:\Users\RiccardoCiurlino\source\repos\function_app_entityFramework\AzureFunctionDTO\obj\Debug\net6.0\ref\AzureFunctionDTO.dll

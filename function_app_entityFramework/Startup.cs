@@ -9,6 +9,7 @@ using MyClassLibrary.UnitOfWork;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using AzureFunctionDTO;
 
 namespace function_app_entityFramework
 {
@@ -20,6 +21,8 @@ namespace function_app_entityFramework
                 .AddEnvironmentVariables()
                 .Build();
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
             builder.Services.AddSingleton<IConfiguration>(config);
 
             string connectionString = GetConnectionStringFromKeyVault(config);
@@ -30,6 +33,7 @@ namespace function_app_entityFramework
             });
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         }
         private static string GetConnectionStringFromKeyVault(IConfiguration config)
         {
