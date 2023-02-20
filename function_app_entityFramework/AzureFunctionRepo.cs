@@ -23,6 +23,8 @@ using System.Net;
 using AutoMapper;
 using AzureFunctionDTO.ResponseDTO;
 using AzureFunctionDTO.RequestDTO;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.OpenApi.Models;
 
 [assembly: FunctionsStartup(typeof(function_app_entityFramework.Startup))]
 
@@ -40,9 +42,11 @@ namespace function_app_entityFramework
         }
 
         [FunctionName("GetToDoList")]
+        [OpenApiOperation(operationId: "GetToDoList", tags: new[] { "todolist" })]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(List<ToDoListDto>), Description = "The OK response")]
         public async Task<IActionResult> GetToDoList(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
-        ILogger log)
+    [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+    ILogger log)
         {
             var toDoListItems = await _unitOfWork.ToDoListRepository.GetAll();
             var toDoListDto = _mapper.Map<List<ToDoListDto>>(toDoListItems);
@@ -51,10 +55,14 @@ namespace function_app_entityFramework
         }
 
         [FunctionName("GetToDoListItem")]
+        [OpenApiOperation(operationId: "GetToDoListItem", tags: new[] { "todolist" })]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The **id** parameter")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ToDoListDto), Description = "The OK response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "text/plain", bodyType: typeof(string), Description = "The Not Found response")]
         public async Task<IActionResult> GetToDoListItem(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "todolist/{id}")] HttpRequest req,
-        [FromRoute] int id,
-        ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "todolist/{id}")] HttpRequest req,
+            [FromRoute] int id,
+            ILogger log)
         {
             var toDoListItem = await _unitOfWork.ToDoListRepository.Get(id);
             if (toDoListItem == null)
@@ -67,6 +75,10 @@ namespace function_app_entityFramework
         }
 
         [FunctionName("UpdateToDoListItem")]
+        [OpenApiOperation(operationId: "UpdateToDoListItem", tags: new[] { "todolist" })]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(ToDoListDto), Description = "The request body")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ToDoListDto), Description = "The OK response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "text/plain", bodyType: typeof(string), Description = "The Not Found response")]
         public async Task<IActionResult> UpdateToDoListItem(
          [HttpTrigger(AuthorizationLevel.Function, "put", Route = "todolist/{Id}")] HttpRequest req,
          [FromRoute] int id,
@@ -92,9 +104,12 @@ namespace function_app_entityFramework
         }
 
         [FunctionName("CreateToDoListItem")]
+        [OpenApiOperation(operationId: "CreateToDoListItem", tags: new[] { "todolist" })]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(ToDoListDto), Description = "The request body")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(ToDoListDto), Description = "The OK response")]
         public async Task<IActionResult> CreateToDoListItem(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "todolist")] HttpRequest req,
-        ILogger log)
+         [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+         ILogger log)
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             ToDoListDto toDoListDto = JsonConvert.DeserializeObject<ToDoListDto>(requestBody);
@@ -106,13 +121,14 @@ namespace function_app_entityFramework
             var toDoListDtoResponse = _mapper.Map<ToDoListDto>(toDoList);
             return new OkObjectResult(toDoListDtoResponse);
         }
-
-
         [FunctionName("DeleteToDoListItem")]
+        [OpenApiOperation(operationId: "DeleteToDoListItem", tags: new[] { "todolist" })]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The ID of the item to delete.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> DeleteToDoListItem(
-        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "todolist/{id}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "todolist/{id}")] HttpRequest req,
             ILogger log,
-        [FromRoute] int id)
+            [FromRoute] int id)
         {
             var toDoList = await _unitOfWork.ToDoListRepository.Get(id);
             if (toDoList == null)
@@ -126,7 +142,9 @@ namespace function_app_entityFramework
         //api dipendenti=======================
 
         [FunctionName("GetAllDipendenti")]
-        public  async Task<IActionResult> GetAllDipendenti(
+        [OpenApiOperation(operationId: "GetAllDipendenti", tags: new[] { "Dipendenti" })]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(IEnumerable<Dipendenti>), Description = "The list of dipendenti")]
+        public async Task<IActionResult> GetAllDipendenti(
          [HttpTrigger(AuthorizationLevel.Function, "get", Route = "dipendenti")] HttpRequest req,
              ILogger log)
         {
@@ -136,10 +154,13 @@ namespace function_app_entityFramework
         }
 
         [FunctionName("CreateDipendente")]
+        [OpenApiOperation(operationId: "CreateDipendente", tags: new[] { "Dipendenti" })]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(CreateDipendenteDto), Required = true, Description = "The dipendente to create")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(DipendenteDto), Description = "The created dipendente")]
         public async Task<IActionResult> CreateDipendente(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "createdipendente")]
-        [FromBody] CreateDipendenteDto createDipendenteDto,
-        ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "createdipendente")]
+            [FromBody] CreateDipendenteDto createDipendenteDto,
+            ILogger log)
         {
             var existingDipendente = await _unitOfWork.DependentsRepository.GetByName(createDipendenteDto.Name);
             if (existingDipendente != null)
@@ -164,13 +185,16 @@ namespace function_app_entityFramework
         }
 
 
-
         [FunctionName("UpdateDipendente")]
+        [OpenApiOperation(operationId: "UpdateDipendente", tags: new[] { "Dipendenti" })]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The ID of the dipendente to update")]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(DipendenteDto), Required = true, Description = "The updated dipendente")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Dipendenti), Description = "The updated dipendente")]
         public async Task<IActionResult> UpdateDipendente(
-        [HttpTrigger(AuthorizationLevel.Function, "put", Route = "dipendenti/{id}")]
-        [FromBody] DipendenteDto dipendenteDto,
-        [FromRoute] int id,
-        ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "put", Route = "dipendenti/{id}")]
+            [FromBody] DipendenteDto dipendenteDto,
+            [FromRoute] int id,
+            ILogger log)
         {
             var dipendente = await _unitOfWork.DependentsRepository.Get(id);
             if (dipendente == null)
@@ -187,10 +211,13 @@ namespace function_app_entityFramework
         }
 
         [FunctionName("GetDependent")]
+        [OpenApiOperation(operationId: "GetDependent", tags: new[] { "Dipendenti" })]
+        [OpenApiParameter(name: "id", In = ParameterLocation.Path, Required = true, Type = typeof(int), Description = "The ID of the dipendente to get")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(DipendenteDto), Description = "The dipendente details")]
         public async Task<IActionResult> GetDependent(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "dependent/{id}")] HttpRequest req,
-        [FromRoute] int id,
-        ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "dependent/{id}")] HttpRequest req,
+            [FromRoute] int id,
+            ILogger log)
         {
             var dipendente = await _unitOfWork.DependentsRepository.Get(id);
             if (dipendente == null)
@@ -209,8 +236,15 @@ namespace function_app_entityFramework
 
 
         [FunctionName("DeleteDipendente")]
-        public  async Task<IActionResult> DeleteDipendente(
-        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeleteDipendente/{id}")] HttpRequest req, ILogger log, int id)
+        [OpenApiOperation(operationId: "DeleteDipendente", tags: new[] { "Dipendenti" })]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(int), Description = "The ID of the dipendente to delete.")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "application/json", bodyType: typeof(string), Description = "The Not Found response")]
+        public async Task<IActionResult> DeleteDipendente(
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "DeleteDipendente/{id}")]
+            HttpRequest req,
+            ILogger log,
+            int id)
         {
             var dipendente = await _unitOfWork.DependentsRepository.Get(id);
 

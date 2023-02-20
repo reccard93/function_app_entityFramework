@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "function_app_entityFramewor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyClassLibrary", "MyClassLibrary\MyClassLibrary.csproj", "{ABE31CA4-B054-40AE-8A0B-9907165F0623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctionDTO", "AzureFunctionDTO\AzureFunctionDTO.csproj", "{6DD57AED-2746-460D-BEEC-51F603EA7D99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctionDTO", "AzureFunctionDTO\AzureFunctionDTO.csproj", "{6DD57AED-2746-460D-BEEC-51F603EA7D99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
